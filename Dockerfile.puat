@@ -1,0 +1,21 @@
+FROM python:3.9
+
+COPY requirements.txt /app/
+RUN pip install -r /app/requirements.txt
+RUN addgroup puat
+RUN adduser --disabled-password --no-create-home --home /app  --gecos '' --ingroup puat puat
+
+COPY puat_main.py /app/puat_main.py
+COPY puat_wsgi.py /app/puat_wsgi.py
+COPY puat /app/puat/
+COPY api /app/api/
+COPY schema /app/schema/
+COPY entrypoint.sh /app/
+
+EXPOSE 5000
+ENV TZ=Europe/Stockholm
+
+USER puat:puat
+WORKDIR /app
+ENTRYPOINT ["/app/entrypoint.sh"]
+#CMD ["/usr/local/bin/gunicorn", "--bind", ":5000", "--access-logfile", "-", "--error-logfile", "-", "--capture-output", "puat_wsgi:app"]

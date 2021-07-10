@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import api.runtime as runtime
 class Jobs(object):
     def __init__(self):
         pass
         
-    def fetch_active(self):
+    def _fetch_active(self):
         ret = []
         ret.append({
             'id': 0,
@@ -17,8 +18,8 @@ class Jobs(object):
 
 
 
-    def _fetch_active(self):
-        cur = db.conn.cursor()
+    def fetch_active(self):
+        cur = runtime.db.conn.cursor()
         cur.execute(
             """SELECT
                 job_id,
@@ -38,4 +39,3 @@ class Jobs(object):
                 'create_ts': j[3],
             })
         return ret
-

@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+  puat:
+    build:
+      context: .
+      dockerfile: Dockerfile.puat
+    ports:
+      - 5010:5000
+    depends_on:
+      - db
+    environment:
+      PGHOST: db
+      PGPASSWORD: pgpassword
+      PGUSER: postgres
+      INIT_DB: 1
+  db:
+    image: postgres:12
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: pgpassword
