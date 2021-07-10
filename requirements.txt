@@ -1,0 +1,5 @@
+gunicorn >= 20.1
+yoyo-migrations >= 7.2
+psycopg2 >= 2.9
+flask >= 2.0
+flask_restful >= 0.3
